@@ -46,7 +46,10 @@ function Viewport() {
     }
     const handleScroll = (e) => {
         e.preventDefault();
-        zoomViewport(normalizeScroll(-e.deltaY), true);
+
+        const zoomingIn = e.deltaY < 0;
+
+        zoomViewport(normalizeScroll(-e.deltaY), zoomingIn);
     }
     const handleMouseDown = (e) => {
         e.preventDefault();
@@ -73,6 +76,16 @@ function Viewport() {
             setSelectX(0);
             setSelectY(0);
         }
+    }
+    const handleMouseOut = (e) => {
+        e.preventDefault();
+        setDragging(false);
+        if(e.clientX < viewport.current.offsetLeft) setSelecting(false);
+        setCursorStyle('default');
+        setSelectWidth(0);
+        setSelectHeight(0);
+        setSelectX(0);
+        setSelectY(0);
     }
     const handleMouseMove = (e) => {
         // prev relative & relative mouse's origin is at the center of the viewport
@@ -157,7 +170,7 @@ function Viewport() {
         top: `${selectY}px`,
     }
 
-    return <div ref={viewport} id='viewport' onMouseMove={handleMouseMove} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onWheel={handleScroll}>
+    return <div ref={viewport} id='viewport' onMouseMove={handleMouseMove} onMouseDown={handleMouseDown} onMouseOut={handleMouseOut} onMouseUp={handleMouseUp} onWheel={handleScroll}>
         <div id='grid-background' style={backgroundStyle}></div>
 
         <div id='viewport-buttons'>

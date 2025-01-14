@@ -29,7 +29,8 @@ export function AppLayoutProvider({ children }) {
       resizerWidth: DEFAULT_VALUES.DEFAULT_RESIZER_WIDTH_PERCENTAGE,
       rendererHeight: DEFAULT_VALUES.DEFAULT_RENDERER_HEIGHT_PERCENTAGE,
       rendererWidth: DEFAULT_VALUES.DEFAULT_RENDERER_WIDTH_PERCENTAGE,
-      grabbing: false
+      grabbing: false,
+      nodeData: null,
     };
   });
 
@@ -46,6 +47,7 @@ export function AppLayoutProvider({ children }) {
   const setRendererHeight = (value) => setState(prev => ({ ...prev, rendererHeight: value }));
   const setRendererWidth = (value) => setState(prev => ({ ...prev, rendererWidth: value }));
   const setGrabbing = (value) => setState(prev => ({ ...prev, grabbing: value }));
+  const setNodeData = (value) => setState(prev => ({ ...prev, nodeData: value }));
 
   return (
     <LayoutContext.Provider value={{
@@ -56,7 +58,8 @@ export function AppLayoutProvider({ children }) {
       setResizerWidth,
       setRendererHeight,
       setRendererWidth,
-      setGrabbing
+      setGrabbing,
+      setNodeData,
     }}>
       {children}
     </LayoutContext.Provider>

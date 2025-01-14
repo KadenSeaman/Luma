@@ -30,6 +30,7 @@ export function RendererLayoutProvider({ children }) {
   const setOffsetY = (value) => setState(prev => ({ ...prev, offsetY: value }));
   const setScale = (value) => setState(prev => ({ ...prev, scale: value }));
 
+
   return (
     <LayoutContext.Provider value={{
       ...state,

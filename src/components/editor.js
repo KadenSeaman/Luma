@@ -11,7 +11,10 @@ function Editor() {
 
     let [numberOfLines, setNumberOfLines] = useState(1);
     let [currentLineNumber, setCurrentLineNumber] = useState(1);
+    let [hasError, setHasError] = useState(false);
+    let [parseError, setParseError] = useState('');
 
+    // Import Web Assembly script into browser
     useEffect(() => {
         const loadWasm = async () => {
           // Dynamically load the wasm_exec.js script
@@ -96,13 +99,91 @@ function Editor() {
             updateLineNumbers();
         }, 1);
     }
+    const handleMouseMove = () => {
+        updateLineNumbers();
+    }
+    const handleMouseUp = () => {
+        updateLineNumbers();
+    }
 
-    
     const parseTextToNodes = () => {
-        try {
-            console.log(JSON.parse(window.parse(editorInputElement.current.value)))
-        } catch (error) {
-            console.log('Cannot parse', error)
+        setHasError(false);
+        setParseError('');
+
+        const res = window.parse(editorInputElement.current.value);
+
+        console.log(res.toString())
+    
+        switch(res.toString()){
+            case 'Error parsing: expected relationship token, got token type of:EOF and value of: EOF':
+                setHasError(true);
+                setParseError('Expected class decleration before named object or a relationship to follow the object');
+            break;
+
+            case 'Error parsing: expected class name, got :EOF':
+                setHasError(true);
+                setParseError('Expected class name to follow class decleration');
+            break;
+
+            case "Error parsing: expected '}' got EOF":
+                setHasError(true);
+                setParseError('Expected closing bracket after class decleration');
+            break;
+
+            case 'Error parsing: expected Identifier in property, got }':
+                setHasError(true);
+                setParseError('Expected field or method to follow visibility operator on class');
+            break;
+
+            case 'Error parsing: expected Identifier after colon in property, got }':
+                setHasError(true);
+                setParseError('Expected value type to follow field decleration on class');
+            break;
+
+            case 'Error parsing: expected Identifier after equals in property, got }':
+                setHasError(true);
+                setParseError('Expected default value to follow equals sign in field decleration');
+            break;
+
+            case 'Error parsing: expected parameter name or ), got }':
+                setHasError(true);
+                setParseError('Expected closing parenthese to follow opening parenthese on method');
+            break;
+
+            case 'Error parsing: expected Identifier after colon in property, got )':
+                setHasError(true);
+                setParseError('Expected value type to follow field decleration within method parameters');
+            break;
+
+            case 'Error parsing: expected Identifier after equals in property, got )':
+                setHasError(true);
+                setParseError('Expected default value to follow equals sign within method parameters');
+            break;
+
+            case 'Error parsing: expected source class name in relationship, got: EOF':
+                setHasError(true);
+                setParseError('Expected target class to follow relationship');
+
+            break;
+
+            case 'Error parsing: expected relationship token, got token type of:EOF and value of: EOF':
+                setHasError(true);
+                setParseError('Expected relationship to follow object name');
+            break;
+
+            case 'Error parsing: expected relationship token, got token type of:DASH and value of: -':
+                setHasError(true);
+                setParseError('Expected relationship to follow object name');
+            break;
+
+            case 'Error parsing: expected Quotation token for middle label on relationship, got token type of:L_COMPOSITION and value of: *--':
+                setHasError(true);
+                setParseError('Expected Middle label following colon');
+            break;
+
+            default:
+                console.log(JSON.parse(res));
+            break;
         }
     }
 
@@ -116,7 +197,10 @@ function Editor() {
             <div ref={lineNumbers} id="line-numbers">
                 {Array.from({length: numberOfLines}, (_,i) => <div className={currentLineNumber === i + 1 ? 'selected-line-number' : 'line-number'} key={i}>{i + 1}</div>)}
             </div>
-            <textarea ref={editorInputElement} id='editor-input' onScroll={synchronizeLineNumberScroll} onKeyUp={handleKeyUp} onKeyDown={handleKeyDown}></textarea>
+            <textarea ref={editorInputElement} id='editor-input' onScroll={synchronizeLineNumberScroll} onKeyUp={handleKeyUp} onKeyDown={handleKeyDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}></textarea>
+            {hasError && 
+                <p id='parse-error'>{parseError}</p>
+            }
         </div>
     )
 }
