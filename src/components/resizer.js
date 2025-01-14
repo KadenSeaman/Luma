@@ -1,13 +1,13 @@
-import { useLayout } from "../context/appLayoutContext";
+import { useAppLayout } from "../context/appLayoutContext";
 import '../styles/resizer.scss';
 
 function Resizer() {
     
-    const { resizerHeight, resizerWidth } = useLayout();
+    const { resizerHeight, resizerWidth } = useAppLayout();
 
     const resizerStyle = {
-        width: resizerWidth + 'px',
-        height: resizerHeight + 'px',
+        width: resizerWidth + 'vw',
+        height: resizerHeight + 'vh'
     }
 
     return (

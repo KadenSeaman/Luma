@@ -1,10 +1,10 @@
-import { useLayout } from "../context/appLayoutContext";
+import { useAppLayout } from "../context/appLayoutContext";
 import React, { useRef, useState, useEffect } from 'react';
 
 import '../styles/editor.scss';
 
 function Editor() {
-    const { editorHeight, editorWidth } = useLayout();
+    const { editorHeight, editorWidth } = useAppLayout();
 
     const editorInputElement = useRef(null);
     const lineNumbers = useRef(null);
@@ -42,7 +42,7 @@ function Editor() {
 
     // Scroll Synchronization
     const synchronizeLineNumberScroll = () => {
-        lineNumbers.scrollTop = editorInputElement.current.scrollTop;
+        lineNumbers.current.scrollTop = editorInputElement.current.scrollTop;
     };
 
     // Line Number Management
@@ -79,6 +79,7 @@ function Editor() {
     };
     
     const handleKeyUp = (e) => {
+        synchronizeLineNumberScroll();
         parseTextToNodes();
     };
     
@@ -98,12 +99,16 @@ function Editor() {
 
     
     const parseTextToNodes = () => {
-        console.log(JSON.parse(window.parse(editorInputElement.current.value)))
+        try {
+            console.log(JSON.parse(window.parse(editorInputElement.current.value)))
+        } catch (error) {
+            console.log('Cannot parse', error)
+        }
     }
 
     const editorStyle = {
-        width:  editorWidth + 'px',
-        height: editorHeight + 'px',
+        width:  editorWidth + 'vw',
+        height: editorHeight + 'vh',
     }
 
     return (

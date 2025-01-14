@@ -2,37 +2,40 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const LayoutContext = createContext(null);
 
-const DEFAULT_EDITOR_WIDTH_PERCENTAGE = 0.49;
-const DEFAULT_EDITOR_HEIGHT_PERCENTAGE = 1;
-const DEFAULT_RESIZER_WIDTH_PERCENTAGE = 0.01;
-const DEFAULT_RESIZER_HEIGHT_PERCENTAGE = 1;
-const DEFAULT_RENDERER_WIDTH_PERCENTAGE = 0.50;
-const DEFAULT_RENDERER_HEIGHT_PERCENTAGE = 1;
+export const DEFAULT_VALUES = {
+  DEFAULT_EDITOR_WIDTH_PERCENTAGE: 49,
+  DEFAULT_EDITOR_HEIGHT_PERCENTAGE: 100,
+  DEFAULT_RESIZER_WIDTH_PERCENTAGE: 1,
+  DEFAULT_RESIZER_HEIGHT_PERCENTAGE: 100,
+  DEFAULT_RENDERER_WIDTH_PERCENTAGE: 50,
+  DEFAULT_RENDERER_HEIGHT_PERCENTAGE: 100,
+}
 
-export function LayoutProvider({ children }) {
+export function AppLayoutProvider({ children }) {
   // Initialize all values
   const [state, setState] = useState(() => {
+    
     // Try to load from localStorage first
-    const saved = localStorage.getItem('layoutState');
+    const saved = localStorage.getItem('appLayoutState');
     if (saved) {
       return JSON.parse(saved);
     }
     
     // Default values
     return {
-      editorHeight: window.innerHeight * DEFAULT_EDITOR_HEIGHT_PERCENTAGE,
-      editorWidth: window.innerWidth * DEFAULT_EDITOR_WIDTH_PERCENTAGE,
-      resizerHeight: window.innerHeight * DEFAULT_RESIZER_HEIGHT_PERCENTAGE,
-      resizerWidth: window.innerWidth * DEFAULT_RESIZER_WIDTH_PERCENTAGE,
-      rendererHeight: window.innerHeight * DEFAULT_RENDERER_HEIGHT_PERCENTAGE,
-      rendererWidth: window.innerWidth * DEFAULT_RENDERER_WIDTH_PERCENTAGE,
+      editorHeight: DEFAULT_VALUES.DEFAULT_EDITOR_HEIGHT_PERCENTAGE,
+      editorWidth: DEFAULT_VALUES.DEFAULT_EDITOR_WIDTH_PERCENTAGE,
+      resizerHeight: DEFAULT_VALUES.DEFAULT_RESIZER_HEIGHT_PERCENTAGE,
+      resizerWidth: DEFAULT_VALUES.DEFAULT_RESIZER_WIDTH_PERCENTAGE,
+      rendererHeight: DEFAULT_VALUES.DEFAULT_RENDERER_HEIGHT_PERCENTAGE,
+      rendererWidth: DEFAULT_VALUES.DEFAULT_RENDERER_WIDTH_PERCENTAGE,
       grabbing: false
     };
   });
 
   // Save to localStorage whenever state changes
   useEffect(() => {
-    localStorage.setItem('layoutState', JSON.stringify(state));
+    localStorage.setItem('appLayoutState', JSON.stringify(state));
   }, [state]);
 
   // Create setter functions for each value
@@ -61,10 +64,10 @@ export function LayoutProvider({ children }) {
 }
 
 // Custom hook to use the layout context
-export function useLayout() {
+export function useAppLayout() {
   const context = useContext(LayoutContext);
   if (context === null) {
-    throw new Error('useLayout must be used within a LayoutProvider');
+    throw new Error('useAppLayout must be used within a AppLayoutProvider');
   }
   return context;
 }

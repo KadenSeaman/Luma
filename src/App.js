@@ -1,40 +1,31 @@
 import './styles/app.scss';
 
-import { LayoutProvider, useLayout } from './context/appLayoutContext'
+import { AppLayoutProvider, useAppLayout, DEFAULT_VALUES } from './context/appLayoutContext'
 
 import Resizer from './components/resizer';
 import Renderer from './components/renderer';
 import Editor from './components/editor';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 function App() {
   return (
-    <LayoutProvider>
-      <AppContent></AppContent>
-    </LayoutProvider>
+    <AppLayoutProvider>
+      <AppContent />
+    </AppLayoutProvider>
   )
 }
 
 function AppContent() {
-  const { grabbing, setGrabbing, setEditorWidth, setRendererWidth, setResizerWidth, editorWidth, setEditorHeight, setRendererHeight, setResizerHeight, rendererWidth, resizerWidth} = useLayout();
-
+  const { grabbing, setGrabbing, setEditorWidth, setRendererWidth, setResizerWidth, setEditorHeight, setRendererHeight, setResizerHeight} = useAppLayout();
   let [cursorStyle, setCursorStyle] = useState('default');
 
-  useEffect(() => {
-    window.addEventListener('resize', handleWindowResize);
-  })
-
-
-
-  const handleWindowResize = () => { 
-    const prevWindowSize = editorWidth + rendererWidth + resizerWidth;
-
-    setEditorWidth(window.innerWidth * (editorWidth / prevWindowSize));
-    setResizerWidth(window.innerWidth * (resizerWidth / prevWindowSize));
-    setRendererWidth(window.innerWidth * (rendererWidth / prevWindowSize));
-    setEditorHeight(window.innerHeight);
-    setResizerHeight(window.innerHeight);
-    setRendererHeight(window.innerHeight);
+  const handleResize = () => {
+      setEditorWidth(DEFAULT_VALUES.DEFAULT_EDITOR_WIDTH_PERCENTAGE);
+      setResizerWidth(DEFAULT_VALUES.DEFAULT_RESIZER_WIDTH_PERCENTAGE);
+      setRendererWidth(DEFAULT_VALUES.DEFAULT_RENDERER_WIDTH_PERCENTAGE);
+      setEditorHeight(DEFAULT_VALUES.DEFAULT_EDITOR_HEIGHT_PERCENTAGE);
+      setRendererHeight(DEFAULT_VALUES.DEFAULT_RENDERER_HEIGHT_PERCENTAGE);
+      setResizerHeight(DEFAULT_VALUES.DEFAULT_RESIZER_HEIGHT_PERCENTAGE);
   }
 
   const handleMouseDown = (e) => {
@@ -53,8 +44,13 @@ function AppContent() {
     if(e.clientX <= 0) setGrabbing(false);
 
     if(grabbing){
-      setEditorWidth(Math.max(0, e.clientX));
-      setRendererWidth(window.innerWidth - e.clientX - resizerWidth)
+      const newEditorWidth = e.clientX / window.innerWidth * 100;
+      const newResizerWidth = DEFAULT_VALUES.DEFAULT_RESIZER_WIDTH_PERCENTAGE;
+      const newRendererWidth = 100 - newEditorWidth - newResizerWidth;
+
+      setEditorWidth(newEditorWidth);
+      setResizerWidth(newResizerWidth);
+      setRendererWidth(newRendererWidth)
     }
     else{
       if(e.target.id === 'resizer'){
@@ -79,7 +75,7 @@ function AppContent() {
   }
 
   return (
-    <div id='app' onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onMouseMove={handleMouseMove} style={appStyle}>
+    <div id='app' onResize={handleResize} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onMouseMove={handleMouseMove} style={appStyle}>
       <Editor  />
       <Resizer />
       <Renderer />
