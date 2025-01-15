@@ -3,16 +3,19 @@ import React, { useRef, useState, useEffect } from 'react';
 
 import '../styles/editor.scss';
 
+import { preProcessJSONData } from "../helper/preProcessNodeJSON";
+
 function Editor() {
-    const { editorHeight, editorWidth } = useAppLayout();
+    const { editorHeight, editorWidth, setRootNode, rootNode } = useAppLayout();
 
     const editorInputElement = useRef(null);
     const lineNumbers = useRef(null);
 
-    let [numberOfLines, setNumberOfLines] = useState(1);
-    let [currentLineNumber, setCurrentLineNumber] = useState(1);
-    let [hasError, setHasError] = useState(false);
-    let [parseError, setParseError] = useState('');
+    const [numberOfLines, setNumberOfLines] = useState(1);
+    const [currentLineNumber, setCurrentLineNumber] = useState(1);
+    const [hasError, setHasError] = useState(false);
+    const [parseError, setParseError] = useState('');
+    const [editorContent, setEditorContent] = useState('');
 
     // Import Web Assembly script into browser
     useEffect(() => {
@@ -69,6 +72,13 @@ function Editor() {
         }
     };
 
+    const handleInputChange = (e) => {
+        const newContent = e.target.value;
+        setEditorContent(newContent);
+        updateLineNumbers(newContent);
+        parseTextToNodes(newContent);
+    };
+
     const insertAtCursor = (text) => {
         const startPos = editorInputElement.current.selectionStart;
         const endPos = editorInputElement.current.selectionEnd;
@@ -81,11 +91,6 @@ function Editor() {
         editorInputElement.current.selectionEnd = newCursorPos;
     };
     
-    const handleKeyUp = (e) => {
-        synchronizeLineNumberScroll();
-        parseTextToNodes();
-    };
-    
     const handleKeyDown = (e) => {
         if(e.key === 'Tab'){
             e.preventDefault(); 
@@ -94,10 +99,6 @@ function Editor() {
         if(e.ctrlKey && e.key === 'l'){
             e.preventDefault();
         }
-
-        setTimeout(() => {
-            updateLineNumbers();
-        }, 1);
     }
     const handleMouseMove = () => {
         updateLineNumbers();
@@ -109,10 +110,9 @@ function Editor() {
     const parseTextToNodes = () => {
         setHasError(false);
         setParseError('');
+        setRootNode(null);
 
         const res = window.parse(editorInputElement.current.value);
-
-        console.log(res.toString())
     
         switch(res.toString()){
             case 'Error parsing: expected relationship token, got token type of:EOF and value of: EOF':
@@ -163,7 +163,6 @@ function Editor() {
             case 'Error parsing: expected source class name in relationship, got: EOF':
                 setHasError(true);
                 setParseError('Expected target class to follow relationship');
-
             break;
 
             case 'Error parsing: expected relationship token, got token type of:EOF and value of: EOF':
@@ -181,11 +180,20 @@ function Editor() {
                 setParseError('Expected Middle label following colon');
             break;
 
+            case 'Error parsing: expected Identifier in property, got [':
+                setHasError(true);
+                setParseError('Parser does not have support for array values - need to fix');
+            break;
+
             default:
-                console.log(JSON.parse(res));
+                console.log(res.toString());
+                setRootNode(preProcessJSONData(JSON.parse(res)));
+                console.log(rootNode);
             break;
         }
     }
+
+
 
     const editorStyle = {
         width:  editorWidth + 'vw',
@@ -197,7 +205,7 @@ function Editor() {
             <div ref={lineNumbers} id="line-numbers">
                 {Array.from({length: numberOfLines}, (_,i) => <div className={currentLineNumber === i + 1 ? 'selected-line-number' : 'line-number'} key={i}>{i + 1}</div>)}
             </div>
-            <textarea ref={editorInputElement} id='editor-input' onScroll={synchronizeLineNumberScroll} onKeyUp={handleKeyUp} onKeyDown={handleKeyDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}></textarea>
+            <textarea ref={editorInputElement} id='editor-input' onScroll={synchronizeLineNumberScroll} onChange={handleInputChange} onKeyDown={handleKeyDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}></textarea>
             {hasError && 
                 <p id='parse-error'>{parseError}</p>
             }
