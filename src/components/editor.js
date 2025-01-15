@@ -113,6 +113,8 @@ function Editor() {
         setRootNode(null);
 
         const res = window.parse(editorInputElement.current.value);
+
+        console.log(res.toString());
     
         switch(res.toString()){
             case 'Error parsing: expected relationship token, got token type of:EOF and value of: EOF':
@@ -180,15 +182,18 @@ function Editor() {
                 setParseError('Expected Middle label following colon');
             break;
 
-            case 'Error parsing: expected Identifier in property, got [':
+            case 'Error parsing: expected ] after [ in field type decleration, got }':
                 setHasError(true);
-                setParseError('Parser does not have support for array values - need to fix');
+                setParseError('Expected ] to follow [ in value type');
             break;
-
             default:
-                console.log(res.toString());
-                setRootNode(preProcessJSONData(JSON.parse(res)));
-                console.log(rootNode);
+                try{
+                    setRootNode(preProcessJSONData(JSON.parse(res)));
+                }
+                catch(error){
+                    console.log(error);
+                }
+
             break;
         }
     }

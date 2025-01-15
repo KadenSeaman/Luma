@@ -1,5 +1,5 @@
 export default class NodeClass {
-    constructor(name, value, fields, methods){
+    constructor(name, fields, methods){
         this.name = name;
         this.fields = fields;
         this.methods = methods;

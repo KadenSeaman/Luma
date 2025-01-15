@@ -7,9 +7,13 @@ export default class NodeField{
     }
 
     toString(){
+        let visibilityString = '';
         let valueTypeString = '';
         let defaultValueString = '';
     
+        if(this.visibility !== undefined){
+            visibilityString = `${this.visibility}`;
+        }
         if(this.valueType !== ''){
             valueTypeString = ` : ${this.valueType}`;
         }
@@ -17,7 +21,7 @@ export default class NodeField{
             defaultValueString = ` = ${this.defaultValue}`;
         }
     
-        const stringValue = `${this.visiblity}${this.name}` + valueTypeString + defaultValueString;
+        const stringValue = visibilityString + `${this.name}` + valueTypeString + defaultValueString;
 
         return stringValue;
     }

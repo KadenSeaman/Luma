@@ -2,9 +2,10 @@
     background-color: #232323;
     border-radius: 10px;
     box-sizing: border-box;
+    position: relative;
 }
 
-#relationship-overlay {
+#relationship-overlay{
     width: 100%;
     height: 100%;
     position: absolute;
@@ -14,4 +15,15 @@
     margin:0;
     pointer-events: none;
     z-index: 2;
+}
+
+#node-container{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    margin:0;
+    padding:0;
+    pointer-events: none;
 }

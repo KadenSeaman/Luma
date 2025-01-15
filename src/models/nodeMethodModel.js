@@ -7,18 +7,25 @@ export default class NodeMethod{
     }
 
     toString(){
+        let visibilityString = '';
         let parameterString = '';
         let returnString = '';
 
-        if(this.parameters.length !== 0){
-            parameterString = this.parameters.map(param => param.toString()).join(',');
+        if(this.visibility !== undefined){
+            visibilityString = `${this.visibility}`;
         }
-        if(this.returnString !== ''){
+        if(this.parameters.length !== 0){
+            for(let i = 0; i < this.parameters.length; i++){
+                let seperator = i === 0 ? '' : ', ';
+                parameterString += seperator + this.parameters[i].toString();
+            }
+        }
+        if(this.returnType !== ''){
             returnString = ` : ${this.returnType}`;
         }
 
 
-        const stringValue = `${this.visiblity}${this.name}(` + parameterString + `)` + returnString;
+        const stringValue = visibilityString + `${this.name}(` + parameterString + `)` + returnString;
 
         return stringValue;
     }

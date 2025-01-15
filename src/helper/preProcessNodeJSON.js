@@ -4,7 +4,6 @@ import NodeField from '../models/nodeFieldModel';
 import NodeMethod from '../models/nodeMethodModel';
 
 export const preProcessJSONData = (data) => {
-    console.log(data);
     if(data.Children === null) return null;
 
     const root = {
@@ -36,7 +35,7 @@ const preProcessClass = (classObj) => {
                 fields.push(preProcessField(child)); 
             }
             else if (child.Type === 'Method'){
-                fields.push(preProcessMethod(child));
+                methods.push(preProcessMethod(child));
             }
         }
     }
@@ -59,23 +58,26 @@ const preProcessRelationship = (relationshipObj) => {
 
 const preProcessField = (fieldObj) => {
     const name = fieldObj.Name;
-    const visiblity = fieldObj.Visiblity;
+    const visiblity = fieldObj.Visibility;
     const defaultValue = fieldObj.Default;
     const valueType = fieldObj.ValueType;
 
-    return new NodeField(name,visiblity,defaultValue,valueType)
+    return new NodeField(name,visiblity,defaultValue,valueType);
 }
 
 const preProcessMethod = (methodObj) => {
     const name = methodObj.Name;
     const visibility = methodObj.Visibility;
+    const returnType = methodObj.ReturnType;
     const parameters = [];
 
-    for(const child of methodObj.Children){
-        parameters.push(preProcessField(child));
-    }
+    console.log(methodObj.Parameters)
 
-    const returnType = methodObj.ReturnType;
+    if(methodObj.Parameters !== null){
+        for(const parameter of methodObj.Parameters){
+            parameters.push(preProcessField(parameter));
+        }    
+    }
 
     return new NodeMethod (name,visibility,parameters,returnType);
 }
