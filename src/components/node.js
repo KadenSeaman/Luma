@@ -22,7 +22,9 @@ function Node({data, index}) {
     return (
         <div className='node' style={nodeStyle}>
             <h1>{data.name}</h1>
+            {(methods.length > 0 || fields.length > 0) && (<div className='divider'></div>)} 
             {fields.length > 0 && fields.map((field,i) => <p key={i}>{field.toString()}</p>)}
+            {methods.length > 0 && fields.length > 0 && (<div className='divider'></div>)} 
             {methods.length > 0 && methods.map((method,i) => <p key={i}>{method.toString()}</p>)}
         </div>
     )

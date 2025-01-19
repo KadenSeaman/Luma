@@ -110,7 +110,6 @@ function Editor() {
     const parseTextToNodes = () => {
         setHasError(false);
         setParseError('');
-        setRootNode(null);
 
         const res = window.parse(editorInputElement.current.value);
 
