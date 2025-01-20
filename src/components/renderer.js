@@ -26,15 +26,12 @@ function RendererContent() {
         height: `${rendererHeight}vh`,
     }
 
-    // const overlayViewBox = `0 0 ${rendererWidth * window.innerWidth} ${rendererHeight * window.innerHeight}`;
-
     return (
-        <div ref={renderer} id='renderer' style={rendererStyle}>
-            {/* <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio='xMidYMid meet' viewBox={overlayViewBox} id='relationship-overlay'></svg> */}
+        <div ref={renderer} id='r   enderer' style={rendererStyle}>
             <Viewport></Viewport>
 
             <div id='node-container'>
-                {rootNode && rootNode.classList.map((classData, i) => <Node key={i} data={classData} index={i} ></Node>)}
+                {rootNode && rootNode.nodes.map((nodeData, i) => <Node key={i} data={nodeData} index={i} ></Node>)}
             </div>
         </div>
     )

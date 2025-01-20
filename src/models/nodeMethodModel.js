@@ -1,4 +1,4 @@
-export default class NodeMethod{
+export default class Method{
     constructor(name, visiblity, parameters, returnType){
         this.name = name;
         this.visiblity = visiblity;

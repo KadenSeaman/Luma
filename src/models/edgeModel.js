@@ -1,4 +1,4 @@
-export default class Relationship {
+export default class Edge {
     constructor(type, source, destination, leftLabel = '', middleLabel = '', rightLabel = '') {
         this.type = type;
         this.source = source;

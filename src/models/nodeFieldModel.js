@@ -1,4 +1,4 @@
-export default class NodeField{
+export default class Field{
     constructor(name, visibility = '', defaultValue = '', valueType = ''){
         this.name = name;
         this.visibility = visibility;

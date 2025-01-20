@@ -1,4 +1,4 @@
-export default class NodeClass {
+export default class Node {
     constructor(name, fields, methods){
         this.name = name;
         this.fields = fields;

@@ -1,22 +1,22 @@
-import Relationship from "../models/nodeRelationshipModel";
-import NodeClass from "../models/nodeClassModel";
-import NodeField from '../models/nodeFieldModel';
-import NodeMethod from '../models/nodeMethodModel';
+import Edge from "../models/edgeModel";
+import Node from "../models/nodeClassModel";
+import Field from '../models/nodeFieldModel';
+import Method from '../models/nodeMethodModel';
 
 export const preProcessJSONData = (data) => {
     if(data.Children === null) return null;
 
     const root = {
-        classList: [],
-        relationshipList: [],
+        nodes: [],
+        edges: [],
     }
 
     for(const child of data.Children){
         if(child.Type === 'Class'){
-            root.classList.push(preProcessClass(child));
+            root.nodes.push(preProcessClass(child));
         }
         else if (child.Type === 'Relationship'){
-            root.relationshipList.push(preProcessRelationship(child));
+            root.edges.push(preProcessRelationship(child));
         }
     }
 
@@ -40,7 +40,7 @@ const preProcessClass = (classObj) => {
         }
     }
 
-    return new NodeClass (name,fields,methods);
+    return new Node (name,fields,methods);
 }
 
 const preProcessRelationship = (relationshipObj) => {
@@ -51,9 +51,9 @@ const preProcessRelationship = (relationshipObj) => {
     const middleLabel = relationshipObj.MiddleLabel;
     const rightLabel = relationshipObj.RightLabel;
 
-    const relationship = new Relationship(type,source,target, leftLabel, middleLabel, rightLabel);
+    const edge = new edge(type,source,target, leftLabel, middleLabel, rightLabel);
 
-    return relationship;
+    return edge;
 }
 
 const preProcessField = (fieldObj) => {
@@ -62,7 +62,7 @@ const preProcessField = (fieldObj) => {
     const defaultValue = fieldObj.Default;
     const valueType = fieldObj.ValueType;
 
-    return new NodeField(name,visiblity,defaultValue,valueType);
+    return new Field(name,visiblity,defaultValue,valueType);
 }
 
 const preProcessMethod = (methodObj) => {
@@ -79,5 +79,5 @@ const preProcessMethod = (methodObj) => {
         }    
     }
 
-    return new NodeMethod (name,visibility,parameters,returnType);
+    return new Method (name,visibility,parameters,returnType);
 }

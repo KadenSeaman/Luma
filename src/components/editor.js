@@ -6,7 +6,7 @@ import '../styles/editor.scss';
 import { preProcessJSONData } from "../helper/preProcessNodeJSON";
 
 function Editor() {
-    const { editorHeight, editorWidth, setRootNode, rootNode } = useAppLayout();
+    const { editorHeight, editorWidth, setRootNode } = useAppLayout();
 
     const editorInputElement = useRef(null);
     const lineNumbers = useRef(null);
@@ -100,6 +100,10 @@ function Editor() {
             e.preventDefault();
         }
     }
+    const handleKeyUp = (e) => {
+        updateLineNumbers();
+    }
+
     const handleMouseMove = () => {
         updateLineNumbers();
     }
@@ -209,7 +213,7 @@ function Editor() {
             <div ref={lineNumbers} id="line-numbers">
                 {Array.from({length: numberOfLines}, (_,i) => <div className={currentLineNumber === i + 1 ? 'selected-line-number' : 'line-number'} key={i}>{i + 1}</div>)}
             </div>
-            <textarea ref={editorInputElement} id='editor-input' onScroll={synchronizeLineNumberScroll} onChange={handleInputChange} onKeyDown={handleKeyDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}></textarea>
+            <textarea ref={editorInputElement} id='editor-input' onKeyUp={handleKeyUp} onScroll={synchronizeLineNumberScroll} onChange={handleInputChange} onKeyDown={handleKeyDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}></textarea>
             {hasError && 
                 <p id='parse-error'>{parseError}</p>
             }
