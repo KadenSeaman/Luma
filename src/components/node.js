@@ -1,13 +1,13 @@
-import { useRendererLayout } from '../context/rendererLayoutContext';
+import { useContext } from 'react';
+import { RendererContext } from '../context/rendererContext';
 import '../styles/node.scss';
 
 
 
 function Node({data, index}) {
 
-    const {offsetX, offsetY, scale} = useRendererLayout();
+    const {offsetX, offsetY, scale} = useContext(RendererContext);
 
-    console.log(data);
 
     const fields = data.fields;
     const methods = data.methods;

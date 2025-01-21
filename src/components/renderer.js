@@ -1,18 +1,19 @@
-import { useAppLayout } from "../context/appLayoutContext";
 import '../styles/renderer.scss';
+
+import { useAppLayout } from "../context/appLayoutContext";
 import { useRef } from 'react'
 
 import Viewport from './viewport';
 import Node from './node';
 
-import { RendererLayoutProvider } from '../context/rendererLayoutContext';
+import { RendererProvider } from '../context/rendererContext';
 
 
 function Renderer() {
     return (
-        <RendererLayoutProvider>
+        <RendererProvider>
             <RendererContent />
-        </RendererLayoutProvider>
+        </RendererProvider>
     )
 }
 
@@ -27,7 +28,7 @@ function RendererContent() {
     }
 
     return (
-        <div ref={renderer} id='r   enderer' style={rendererStyle}>
+        <div ref={renderer} id='renderer' style={rendererStyle}>
             <Viewport></Viewport>
 
             <div id='node-container'>
