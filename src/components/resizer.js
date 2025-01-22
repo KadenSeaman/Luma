@@ -1,9 +1,10 @@
-import { useAppLayout } from "../context/appLayoutContext";
+import { useContext } from "react";
+import { AppContext } from "../context/appContext";
 import '../styles/resizer.scss';
 
 function Resizer() {
     
-    const { resizerHeight, resizerWidth } = useAppLayout();
+    const { resizerHeight, resizerWidth } = useContext(AppContext);
 
     const resizerStyle = {
         width: resizerWidth + 'vw',

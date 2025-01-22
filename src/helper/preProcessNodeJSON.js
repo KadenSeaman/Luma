@@ -1,7 +1,7 @@
 import Edge from "../models/edgeModel";
-import Node from "../models/nodeClassModel";
-import Field from '../models/nodeFieldModel';
-import Method from '../models/nodeMethodModel';
+import Node from "../models/nodeModel";
+import Field from '../models/fieldModel';
+import Method from '../models/methodModel';
 
 export const preProcessJSONData = (data) => {
     if(data.Children === null) return null;
@@ -40,7 +40,7 @@ const preProcessClass = (classObj) => {
         }
     }
 
-    return new Node (name,fields,methods);
+    return new Node (name,fields,methods, );
 }
 
 const preProcessRelationship = (relationshipObj) => {
@@ -51,7 +51,7 @@ const preProcessRelationship = (relationshipObj) => {
     const middleLabel = relationshipObj.MiddleLabel;
     const rightLabel = relationshipObj.RightLabel;
 
-    const edge = new edge(type,source,target, leftLabel, middleLabel, rightLabel);
+    const edge = new Edge(type,source,target, leftLabel, middleLabel, rightLabel);
 
     return edge;
 }

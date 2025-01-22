@@ -28,3 +28,26 @@
     padding:0;
     pointer-events: none;
 }
+
+#node-ruler{
+    position: absolute;
+    text-align: center;
+    color: black;
+
+    border-radius: 15px;
+    background-color: white;
+    border: 1px solid black;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+}
+
+.divider-ruler{
+    width: 90%;
+    height: 2px;
+    background-color: black;
+}

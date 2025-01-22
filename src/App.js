@@ -1,22 +1,32 @@
 import './styles/app.scss';
 
-import { AppLayoutProvider, useAppLayout, DEFAULT_VALUES } from './context/appLayoutContext'
+import { AppProvider } from './context/appContext';
+import { AppContext } from './context/appContext'
 
 import Resizer from './components/resizer';
 import Renderer from './components/renderer';
 import Editor from './components/editor';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 function App() {
   return (
-    <AppLayoutProvider>
+    <AppProvider>
       <AppContent />
-    </AppLayoutProvider>
+    </AppProvider>
   )
 }
 
 function AppContent() {
-  const { grabbing, setGrabbing, setEditorWidth, setRendererWidth, setResizerWidth, setEditorHeight, setRendererHeight, setResizerHeight} = useAppLayout();
+  const DEFAULT_VALUES = {
+    DEFAULT_EDITOR_WIDTH_PERCENTAGE: 49,
+    DEFAULT_EDITOR_HEIGHT_PERCENTAGE: 100,
+    DEFAULT_RESIZER_WIDTH_PERCENTAGE: 1,
+    DEFAULT_RESIZER_HEIGHT_PERCENTAGE: 100,
+    DEFAULT_RENDERER_WIDTH_PERCENTAGE: 50,
+    DEFAULT_RENDERER_HEIGHT_PERCENTAGE: 100,
+  }
+
+  const { grabbing, setGrabbing, setEditorWidth, setRendererWidth, setResizerWidth, setEditorHeight, setRendererHeight, setResizerHeight} = useContext(AppContext);
   let [cursorStyle, setCursorStyle] = useState('default');
 
   const handleResize = () => {

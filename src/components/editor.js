@@ -1,12 +1,12 @@
-import { useAppLayout } from "../context/appLayoutContext";
-import React, { useRef, useState, useEffect } from 'react';
+import { AppContext } from "../context/appContext";
+import React, { useRef, useState, useEffect, useContext } from 'react';
 
 import '../styles/editor.scss';
 
 import { preProcessJSONData } from "../helper/preProcessNodeJSON";
 
 function Editor() {
-    const { editorHeight, editorWidth, setRootNode } = useAppLayout();
+    const { editorHeight, editorWidth, setRootNode, rootNode } = useContext(AppContext);
 
     const editorInputElement = useRef(null);
     const lineNumbers = useRef(null);
@@ -15,7 +15,7 @@ function Editor() {
     const [currentLineNumber, setCurrentLineNumber] = useState(1);
     const [hasError, setHasError] = useState(false);
     const [parseError, setParseError] = useState('');
-    const [editorContent, setEditorContent] = useState('');
+    const [editorContent, setEditorContent] = useState('');  // eslint-disable-line no-unused-vars
 
     // Import Web Assembly script into browser
     useEffect(() => {
@@ -117,6 +117,7 @@ function Editor() {
 
         const res = window.parse(editorInputElement.current.value);
     
+
         switch(res.toString()){
             case 'Error parsing: expected relationship token, got token type of:EOF and value of: EOF':
                 setHasError(true);
@@ -166,11 +167,6 @@ function Editor() {
             case 'Error parsing: expected source class name in relationship, got: EOF':
                 setHasError(true);
                 setParseError('Expected target class to follow relationship');
-            break;
-
-            case 'Error parsing: expected relationship token, got token type of:EOF and value of: EOF':
-                setHasError(true);
-                setParseError('Expected relationship to follow object name');
             break;
 
             case 'Error parsing: expected relationship token, got token type of:DASH and value of: -':
