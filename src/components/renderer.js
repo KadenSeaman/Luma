@@ -32,7 +32,7 @@ function RendererContent() {
             <Viewport></Viewport>
 
             <div id='node-container'>
-                {rootNode && rootNode.nodes.map((nodeData, i) => <Node key={i} data={nodeData} index={i} ></Node>)}
+                {rootNode && rootNode.nodes !== undefined && rootNode.nodes.map((nodeData, i) => <Node key={i} data={nodeData} index={i} ></Node>)}
             </div>
         </div>
     )

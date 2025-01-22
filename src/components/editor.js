@@ -116,8 +116,6 @@ function Editor() {
         setParseError('');
 
         const res = window.parse(editorInputElement.current.value);
-
-        console.log(res.toString());
     
         switch(res.toString()){
             case 'Error parsing: expected relationship token, got token type of:EOF and value of: EOF':
@@ -194,7 +192,7 @@ function Editor() {
                     setRootNode(preProcessJSONData(JSON.parse(res)));
                 }
                 catch(error){
-                    console.log(error);
+
                 }
 
             break;
