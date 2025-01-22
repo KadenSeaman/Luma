@@ -51,7 +51,7 @@ const preProcessRelationship = (relationshipObj) => {
     const middleLabel = relationshipObj.MiddleLabel;
     const rightLabel = relationshipObj.RightLabel;
 
-    return new Edge(type, source, target, leftLabel, middleLabel, rightLabel);
+    return new Edge(type, source, target, leftLabel, middleLabel, rightLabel, 0, 0, 0, 0);
 }
 
 const preProcessField = (fieldObj) => {

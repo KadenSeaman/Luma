@@ -3,10 +3,11 @@ import '../styles/renderer.scss';
 import { AppContext } from "../context/appContext";
 import { RendererProvider } from '../context/rendererContext';
 
-import { useContext, useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 
 import Viewport from './viewport';
 import Node from './node';
+import Edge from './edge';
 
 function Renderer() {
     return (
@@ -19,6 +20,9 @@ function Renderer() {
 function RendererContent() {
     let renderer = useRef(null);
     const { rendererHeight, rendererWidth, rootNode, forceRender } = useContext(AppContext);
+
+    const [formattedNodeData, setFormattedNodeData] = useState([]);
+    const [formattedEdgeData, setFormattedEdgeData] = useState([]);
 
     const rendererStyle = {
         width: `${rendererWidth}vw`,
@@ -83,10 +87,27 @@ function RendererContent() {
                 }
             }
 
+            for(const edge of rootNode.edges || []){
+                if(!nodeNameToNode.has(edge.source)) continue;
+                if(!nodeNameToNode.has(edge.target)) continue;
+
+                const src = nodeNameToNode.get(edge.source);
+                const target = nodeNameToNode.get(edge.target);
+
+
+                edge.rootX = src.x;
+                edge.rootY = src.y;
+                edge.targetX = target.x;
+                edge.targetY = target.y;
+            }
+
+            setFormattedNodeData(rootNode.nodes);
+            setFormattedEdgeData(rootNode.edges);
             forceRender();
         }
         
         if(rootNode) calculatePositions();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [rootNode])
 
 
@@ -95,8 +116,11 @@ function RendererContent() {
         <div ref={renderer} id='renderer' style={rendererStyle}>
             <Viewport></Viewport>
             <div id='node-container'>   
-                {rootNode && (rootNode.nodes || []).map((node, i) => <Node key={i} data={node} />)}
+                {formattedNodeData.length > 0 && (formattedNodeData || []).map((node, i) => <Node key={i} data={node} />)}
             </div>
+            <svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid meet' viewBox={`0 0 ${renderer.current.offsetWidth} ${renderer.current.offsetHeight}`}  id='edge-container'>
+                {formattedEdgeData.length > 0 && (formattedEdgeData || []).map((edge, i) => <Edge key={i} data={edge}/>)}
+            </svg>
         </div>
     )
 }

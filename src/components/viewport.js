@@ -169,8 +169,8 @@ function Viewport() {
     const backgroundStyle = {
         backgroundSize: `${scale * 40}px ${scale * 40}px`,
         backgroundPosition: `${offsetX * scale}px ${offsetY * scale}px`,
-        backgroundImage: `linear-gradient(to right, lightgrey 1px, transparent 1px),
-        linear-gradient(to top, lightgrey 1px, transparent 1px)`,
+        backgroundImage: `linear-gradient(to right,rgb(100, 100, 100) 1px, transparent 1px),
+        linear-gradient(to top,rgb(100, 100, 100) 1px, transparent 1px)`,
         cursor: cursorType.current,
     }
 
