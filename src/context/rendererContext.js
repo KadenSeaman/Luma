@@ -28,7 +28,7 @@ export const RendererProvider = ({ children }) => {
       scale: scaleRef.current,
       updateOffsetX,
       updateOffsetY,
-      updateScale
+      updateScale,
     }}>{children}</RendererContext.Provider>
   )
 }

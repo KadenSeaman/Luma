@@ -59,6 +59,7 @@ export function AppProvider({ children }) {
     setRenderTrigger(prev => prev + 1);
   }
 
+  const forceRender = () => setRenderTrigger(prev => prev + 1);
 
 
   return (
@@ -78,7 +79,8 @@ export function AppProvider({ children }) {
       setRendererHeight,
       setRendererWidth,
       setGrabbing,
-      setRootNode
+      setRootNode,
+      forceRender
     }}>
       {children}
     </AppContext.Provider>

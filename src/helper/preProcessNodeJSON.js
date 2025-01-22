@@ -40,7 +40,7 @@ const preProcessClass = (classObj) => {
         }
     }
 
-    return new Node (name,fields,methods, );
+    return new Node (name,fields,methods);
 }
 
 const preProcessRelationship = (relationshipObj) => {
@@ -51,9 +51,7 @@ const preProcessRelationship = (relationshipObj) => {
     const middleLabel = relationshipObj.MiddleLabel;
     const rightLabel = relationshipObj.RightLabel;
 
-    const edge = new Edge(type,source,target, leftLabel, middleLabel, rightLabel);
-
-    return edge;
+    return new Edge(type, source, target, leftLabel, middleLabel, rightLabel);
 }
 
 const preProcessField = (fieldObj) => {
@@ -70,8 +68,6 @@ const preProcessMethod = (methodObj) => {
     const visibility = methodObj.Visibility;
     const returnType = methodObj.ReturnType;
     const parameters = [];
-
-    console.log(methodObj.Parameters)
 
     if(methodObj.Parameters !== null){
         for(const parameter of methodObj.Parameters){
