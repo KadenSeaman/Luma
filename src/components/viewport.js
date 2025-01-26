@@ -4,7 +4,7 @@ import { useState, useRef, useContext } from 'react';
 
 function Viewport() {
 
-    const ZOOM_MIN = 1;
+    const ZOOM_MIN = 0.5;
     const ZOOM_MAX = 10;
     const RENDER_DEBUG_MENU = true;
     const RENDER_SELECT_BOX = true;
@@ -68,8 +68,8 @@ function Viewport() {
         const dragDisX = relativeXRef.current - prevRelativeXRef.current;
         const dragDisY = relativeYRef.current - prevRelativeYRef.current;
 
-        updateOffsetX(offsetX + dragDisX);
-        updateOffsetY(offsetY + dragDisY);
+        updateOffsetX(offsetX + dragDisX / scale);
+        updateOffsetY(offsetY + dragDisY / scale);
     }
 
     const endDrag = () =>{
@@ -109,8 +109,20 @@ function Viewport() {
     const normalizeZoom = (deltaY) => deltaY < 0 ? -1 : 1;
 
     const zoom = (dir, useMouseOffset) => {
-        // calculate newScale
-        const newScale = scale + dir;
+        let newScale = scale;
+
+        if(scale > 1){
+            newScale += dir;
+        }
+        else{
+            if(dir < 0){
+                newScale /= 2;
+            }
+            else{
+                newScale *= 2;
+            }
+        }
+        
 
         // prevent zoom past extremes
         if(newScale < ZOOM_MIN || newScale > ZOOM_MAX) return;

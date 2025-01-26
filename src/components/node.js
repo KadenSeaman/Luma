@@ -6,15 +6,18 @@ import '../styles/node.scss';
 
 function Node({data, ref}) {
 
-    const {id = 0, name, fields, methods, fontSize, padding, x, y} = data; 
+    const {id = 0, name, fields, methods, fontSize, padding, width, height, x, y} = data; 
     const {offsetX, offsetY, scale} = useContext(RendererContext);
 
     const nodeStyle = {
         opacity: id === 0 ? 0 : 1,
+        width: `${width * scale}px`,
+        height: `${height * scale}px`,
         left: `${(x + offsetX) * scale}px`,
         top: `${(y + offsetY) * scale}px`,
         fontSize: `${fontSize * scale}px`,
         padding: `${padding * scale}px`,
+        borderRadius: `${15 * scale}px`,
     }
 
     return (

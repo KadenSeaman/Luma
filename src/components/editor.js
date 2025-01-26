@@ -6,7 +6,7 @@ import '../styles/editor.scss';
 import { preProcessJSONData } from "../helper/preProcessNodeJSON";
 
 function Editor() {
-    const { editorHeight, editorWidth, setRootNode, rootNode } = useContext(AppContext);
+    const { editorHeight, editorWidth, setRootNode } = useContext(AppContext);
 
     const editorInputElement = useRef(null);
     const lineNumbers = useRef(null);
