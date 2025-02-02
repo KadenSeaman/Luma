@@ -1,5 +1,5 @@
 export default class Edge {
-    constructor(type, source, target, leftLabel = '', middleLabel = '', rightLabel = '', rootX = 0, rootY = 0, targetX = 0, targetY = 0) {
+    constructor(type, source, target, leftLabel = '', middleLabel = '', rightLabel = '', rootX = 0, rootY = 0, targetX = 0, targetY = 0, path = []) {
         this.type = type;
         this.source = source;
         this.target = target;
@@ -10,5 +10,6 @@ export default class Edge {
         this.rootY = rootY;
         this.targetX = targetX;
         this.targetY = targetY;
+        this.path = path;
     }
 }
