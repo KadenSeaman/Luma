@@ -1,7 +1,6 @@
 import '../styles/renderer.scss';
 
 import { AppContext } from "../context/appContext";
-import { RendererProvider } from '../context/rendererContext';
 
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Queue } from '@datastructures-js/queue';
@@ -12,27 +11,20 @@ import Edge from './edge';
 
 function Renderer() {
     return (
-        <RendererProvider>
-            <RendererContent />
-        </RendererProvider>
+        <RendererContent />
     )
 }
 
 function RendererContent() {
     const renderer = useRef(null);
     const textRuler = useRef(null);
-    const { rendererHeight, rendererWidth, rootNode, forceRender } = useContext(AppContext);
+    const { rendererWidth, rootNode, forceRender } = useContext(AppContext);
 
     const [formattedNodeData, setFormattedNodeData] = useState([]);
     const [formattedEdgeData, setFormattedEdgeData] = useState([]);
 
-    
-    
-
-
     const rendererStyle = {
-        width: `${rendererWidth}vw`,
-        height: `${rendererHeight}vh`,
+        width: `${rendererWidth}vw`
     }
 
     useEffect(() => {
@@ -99,13 +91,11 @@ function RendererContent() {
             }
 
             let componentOffsetX = 0;
-            let componentOffsetY = 0;
 
             for(let i = 0; i < optimizedLevels.length; i++){
-                const [curComponentWidth, curComponentHeight] = assignPositions(optimizedLevels[i], nodeIdToNode, componentOffsetX);
+                const curComponentWidth = assignPositions(optimizedLevels[i], nodeIdToNode, componentOffsetX);
 
                 componentOffsetX += curComponentWidth;
-                componentOffsetY += curComponentHeight;
             }
 
             assignPaths(nodeIdToNode, nodeNameToId);
@@ -134,7 +124,6 @@ function RendererContent() {
 
         const assignPositions = (levels, nodeIdToNode, componentOffsetX) => {
             let componentWidth = 0;
-            let componentHeight = 0;
 
             // loop through each level
             let levelYOffset = 0;
@@ -163,11 +152,10 @@ function RendererContent() {
                 levelYOffset += maxHeight + Y_PADDING;
 
                 // component height = sum of all max heights of every level 
-                componentHeight += maxHeight;
                 componentWidth = Math.max(componentWidth, levelXOffset);
             }
 
-            return [componentWidth, componentHeight];
+            return componentWidth;
         }
 
         const convertLevelsToArray = (levels) => {
@@ -333,7 +321,7 @@ function RendererContent() {
                 }
     
     
-                node.width = Math.max(100, calculatedWidth + node.padding * 2);
+                node.width = Math.max(100, calculatedWidth + node.padding * 2 + 20);
                 node.height = Math.max(100, calculatedHeight + node.padding * 2);
             }
         }

@@ -6,7 +6,7 @@ import '../styles/editor.scss';
 import { preProcessJSONData } from "../helper/preProcessNodeJSON";
 
 function Editor() {
-    const { editorHeight, editorWidth, setRootNode } = useContext(AppContext);
+    const { editorWidth, setRootNode } = useContext(AppContext);
 
     const editorInputElement = useRef(null);
     const lineNumbers = useRef(null);
@@ -199,7 +199,6 @@ function Editor() {
 
     const editorStyle = {
         width:  editorWidth + 'vw',
-        height: editorHeight + 'vh',
     }
 
     return (

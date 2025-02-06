@@ -1,3 +1,5 @@
+@use './variables.scss';
+
 #editor{
     box-sizing: border-box;
     margin: 0;
@@ -6,9 +8,8 @@
     gap: 10px;
     display: flex;
     position: relative;
-    font-family: monospace;
     line-height: 21px;
-    background: #232323;
+    background: var(--darkBackground);
     overflow: hidden;
     z-index: 1;
 }
@@ -20,32 +21,33 @@
     padding-right: 30px;
     margin-left: 10px;
     border: 0;
-    background: #232323;
+    background: var(--darkBackground);
     color: #6bbdf8;
-    height: 100%;
     width: 90%;
     outline: none;
     resize: none;
     white-space: pre;
     overflow-y: scroll;
+    font-family: var(--fontFamily);
 }
 
 #line-numbers{
     text-align: right;
     display: flex;
     flex-direction: column;
-    color:#838383;
+    color: var(--mediumLightText);
     vertical-align: bottom;
     width: 30px;
     overflow-y: hidden;
     scrollbar-width: 0px;
+    font-family: var(--fontFamily);
 }
 
 .line-number{
     height: 21px;
 }
 .selected-line-number{
-    color:white;
+    color: var(--lightText);
     height: 21px;
     text-align: center;
 }

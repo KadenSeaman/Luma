@@ -4,12 +4,10 @@ import { useState, useRef, useContext } from 'react';
 
 function Viewport() {
     /// TODO: dumy nodes cannot have an x or y value
-    const ZOOM_MIN = 0.5;
-    const ZOOM_MAX = 10;
     const RENDER_DEBUG_MENU = true;
     const RENDER_SELECT_BOX = true;
 
-    const { offsetX, offsetY, scale, updateOffsetX, updateOffsetY, updateScale } = useContext(RendererContext);
+    const { offsetX, offsetY, scale, updateOffsetX, updateOffsetY, updateScale, updateViewportOffsetHeight, updateViewportOffsetWidth, ZOOM_MAX, ZOOM_MIN } = useContext(RendererContext);
 
     const viewport = useRef(null);
 
@@ -36,16 +34,6 @@ function Viewport() {
 
     let cursorType = useRef('default');
 
-    const zoomOutButton = () => zoom(-1, false);
-    const zoomInButton = () => zoom(1, false);
-    const resetViewportButton = () => resetViewport();
-
-    const resetViewport = () => {
-        updateScale(1);
-        updateOffsetX(0);
-        updateOffsetY(0);
-    }
-
     const updateMousePositions = (e) => {
         const rect = viewport.current.getBoundingClientRect();
 
@@ -57,6 +45,11 @@ function Viewport() {
 
         relativeXRef.current = absoluteXRef.current - viewport.current.clientWidth / 2;
         relativeYRef.current = absoluteYRef.current - viewport.current.clientHeight / 2;
+
+        if(viewport && viewport.current){
+            updateViewportOffsetHeight(viewport.current.offsetHeight);
+            updateViewportOffsetWidth(viewport.current.offsetWidth);
+        }
     }
 
     const startDrag = () => {
@@ -116,10 +109,15 @@ function Viewport() {
         }
         else{
             if(dir < 0){
-                newScale /= 2;
+                newScale -= 0.1;
             }
             else{
-                newScale *= 2;
+                if(scale === 1){
+                    newScale += dir;
+                }
+                else{
+                    newScale += 0.1;
+                }
             }
         }
         
@@ -195,16 +193,10 @@ function Viewport() {
 
     return <div ref={viewport} id='viewport' onMouseMove={handleMouseMove} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onWheel={handleWheel}>
         <div id='grid-background' style={backgroundStyle}></div>
-
-        <div id='viewport-buttons'>
-            <button id='zoom-out' onMouseDown={zoomOutButton}>-</button>
-            <button id='zoom-in' onMouseDown={zoomInButton}>+</button>
-            <button id='reset-viewport' onMouseDown={resetViewportButton}>reset</button>
-        </div>
         {RENDER_DEBUG_MENU && <div id='debug'>
             <p>x position: {-offsetX.toFixed()}</p>
             <p>y position: {offsetY.toFixed()}</p>
-            <p>scale: {scale}</p>
+            <p>scale: {scale.toFixed()}</p>
             <p>mouseX: {relativeXRef.current.toFixed()}</p>
             <p>mouseY: {relativeYRef.current.toFixed()}</p>
         </div>}

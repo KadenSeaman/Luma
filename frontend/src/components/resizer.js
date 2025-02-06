@@ -4,12 +4,13 @@ import '../styles/resizer.scss';
 
 function Resizer() {
     
-    const { resizerHeight, resizerWidth } = useContext(AppContext);
+    const { resizerWidth, grabbing } = useContext(AppContext);
 
     const resizerStyle = {
         width: resizerWidth + 'vw',
-        height: resizerHeight + 'vh'
     }
+
+    if(grabbing) resizerStyle.background = 'linear-gradient(var(--yellowPrimary), var(--coralPrimary))'; 
 
     return (
         <div id='resizer' style={resizerStyle}/>

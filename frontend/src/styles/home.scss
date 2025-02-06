@@ -1,0 +1,60 @@
+@use './variables.scss';
+
+#homeContainer{
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--darkBackground);
+    display: flex;
+    margin: 0px;
+    padding: 0px;
+}
+#left-panel{
+    box-shadow: 5px 0px 10px black;
+    background-color: var(--darkBackgroundShadow);
+    width: 300px;
+}
+#left-panel-list{
+    width: 100%;
+    padding: 0px;
+    color: var(--lightText);
+    font-family: var(--fontFamily);
+    list-style-type: none;
+    & > li{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+.left-panel-list-item{
+    display: block;
+    padding: 10px 0px;
+    width: 100%;
+    font-weight: bold;
+    padding-left: 200px;
+    color: var(--lightText);
+    text-decoration: none;
+}
+li:visited{
+    width: 100%;
+    color: var(--lightText);
+    text-decoration: none;
+}
+#main-panel{
+    width: 100%;
+}
+
+#main-panel-title{
+    margin-top: 100px;
+    margin-left: 200px;
+    font-size: 48px;
+    text-align: left;
+    font-weight: bold;
+    color: var(--lightText);
+    font-family: var(--fontFamily);
+}
+#logo-title-container{
+    display: flex;
+    gap: 10px;
+}

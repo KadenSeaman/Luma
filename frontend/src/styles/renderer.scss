@@ -1,9 +1,11 @@
+@use './variables.scss';
 #renderer {
     background-color: #232323;
     border-radius: 10px;
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
+    height: auto
 }
 
 #relationship-overlay{
@@ -61,4 +63,7 @@
     padding: 0;
     margin: 0;
     pointer-events: none;
+}
+#text-calculator{
+    font-family: var(--fontFamily);
 }

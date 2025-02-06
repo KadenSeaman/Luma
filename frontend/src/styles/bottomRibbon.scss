@@ -1,0 +1,21 @@
+#bottom-ribbon{
+    width: 100%;
+    height: 40px;
+    background-color: var(--darkBackgroundShadow);
+    border: 1px solid var(--backgroundOutline);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: right;
+}
+#zoom-level{
+    height: 100%;
+    width: 60px;
+    text-align: center;
+    font-family: var(--fontFamily);
+    background-color: var(--darkBackgroundShadow);
+    border: 1px solid var(--backgroundOutline);
+    color: var(--lightText);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

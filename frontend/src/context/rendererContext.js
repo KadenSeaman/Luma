@@ -7,6 +7,11 @@ export const RendererProvider = ({ children }) => {
   const offsetXRef = useRef(0);
   const offsetYRef = useRef(0);
   const scaleRef = useRef(1);
+  const viewportOffsetWidthRef = useRef(0);
+  const viewportOffsetHeightRef = useRef(0);
+
+  const ZOOM_MIN = 0.5;
+  const ZOOM_MAX = 10;
 
   const updateOffsetX = newOffsetX => {
     offsetXRef.current = newOffsetX;
@@ -17,8 +22,19 @@ export const RendererProvider = ({ children }) => {
     setRenderTrigger(prev => prev + 1);
   }
   const updateScale = newScale => {
-    scaleRef.current = newScale;
-    setRenderTrigger(prev => prev + 1);
+    if(newScale <= ZOOM_MIN || newScale >= ZOOM_MAX){
+
+    }
+    else{
+      scaleRef.current = newScale;
+      setRenderTrigger(prev => prev + 1);
+    };
+  }
+  const updateViewportOffsetWidth = newViewportOffsetWidth => {
+    viewportOffsetWidthRef.current = newViewportOffsetWidth;
+  }
+  const updateViewportOffsetHeight = newViewportOffsetHeight => {
+    viewportOffsetHeightRef.current = newViewportOffsetHeight;
   }
 
   return (
@@ -26,9 +42,15 @@ export const RendererProvider = ({ children }) => {
       offsetX: offsetXRef.current,
       offsetY: offsetYRef.current,
       scale: scaleRef.current,
+      viewportOffsetHeight: viewportOffsetHeightRef.current,
+      viewportOffsetWidth: viewportOffsetWidthRef.current,
       updateOffsetX,
       updateOffsetY,
       updateScale,
+      updateViewportOffsetHeight,
+      updateViewportOffsetWidth,
+      ZOOM_MAX,
+      ZOOM_MIN
     }}>{children}</RendererContext.Provider>
   )
 }

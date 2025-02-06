@@ -1,0 +1,73 @@
+@use './variables.scss';
+
+.signup-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 35px;
+    margin: 0px;
+    color: var(--darkText);
+    font-weight: bold;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--yellowPrimary), var(--coralPrimary));
+    text-decoration: none;
+    font-family: var(--fontFamily);
+}
+
+.login-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 35px;
+    margin: 0px;
+    color: var(--lightText);
+    font-weight: bold;
+    border-radius: 20px;
+    background-color: var(--darkBackground);
+    text-decoration: none;
+    font-family: var(--fontFamily);
+}
+
+.new-document-btn{
+    box-sizing: border-box;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 35px;
+    margin: 0px;
+    color: var(--darkText);
+    font-weight: bold;
+    border-radius: 10px;
+    background: linear-gradient(var(--yellowPrimary), var(--coralPrimary));
+    text-decoration: none;
+    font-family: var(--fontFamily);
+}
+
+.ribbon-button{
+    width: 100px;
+    height: 100%;
+    text-align: center;
+    font-family: var(--fontFamily);
+    background-color: var(--darkBackgroundShadow);
+    border: 1px solid var(--backgroundOutline);
+    color: var(--lightText);
+
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.bottom-ribbon-zoom-button{
+    height: 100%;
+    min-width: 35px;
+    text-align: center;
+    font-family: var(--fontFamily);
+    background-color: var(--darkBackgroundShadow);
+    border: 1px solid var(--backgroundOutline);
+    color: var(--lightText);
+
+    &:hover{
+        cursor: pointer;
+    }
+}
