@@ -19,7 +19,6 @@ function LumaApp() {
           <AppContent />
         </AppProvider>
     </>
-
   )
 }
 
@@ -93,7 +92,7 @@ function AppContent() {
   return (
     <div id='app' onResize={handleResize} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onMouseMove={handleMouseMove} style={appStyle}>
       <RendererProvider>
-        <NavBar logo={true} title={true} logoLink='/'></NavBar>
+        <NavBar logo={true} title={true} logoLink='/Home'></NavBar>
         <TopRibbon></TopRibbon>
         <div id='functional-app'>
 

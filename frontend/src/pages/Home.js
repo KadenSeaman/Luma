@@ -12,7 +12,7 @@ const Home = () => {
                 <ul id='left-panel-list'>
                     <li>
                         <div id='logo-title-container'>
-                            <Logo  logoLink={'/Home'}/>
+                            <Logo  logoLink={'/'}/>
                             <h1 id='title'>Luma</h1>
                         </div>  
                     </li>

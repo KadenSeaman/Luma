@@ -1,0 +1,114 @@
+@import './variables.scss';
+
+#sign-in-container{
+    width: 100vw;
+
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: var(--fontFamily);
+    background-color: var(--backgroundBlack);
+    overflow: hidden;
+}
+
+#login-page{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#sign-in, #welcome-back{
+    width: 400px;
+    height: 700px;
+}
+
+#sign-in{
+    border-radius: 25px 0 0 25px;
+    background: linear-gradient(var(--darkBackground), var(--darkBackgroundShadow));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 10px 10px 10px var(--darkBackground);
+}
+#welcome-back{
+    background: linear-gradient(var(--yellowPrimary), var(--coralPrimary));
+    color: var(--darkText);
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+    border-radius: 0px 25px 25px 0;
+    box-sizing: border-box;
+    padding: 25px;
+    box-shadow: 10px 10px 10px var(--darkBackground);
+
+}
+#sign-in-form{
+    width: 80%;
+}
+
+#sign-in-title{
+    font-weight: bold;
+    font-size: 60px;
+    color: var(--lightText);
+    margin-bottom: 60px;
+}
+
+#username-title{
+    font-size: 60px;
+    width: 300px;
+    text-align: right;
+}
+#username-tip{
+    font-size: 20px;
+    width: 240px;
+    text-align: right;
+}
+
+
+#top-tooltip{
+    margin-top: 100px
+}
+.sign-in-btn{
+    box-sizing: border-box;
+    height: 80px;
+    font-size: 24px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 35px;
+    margin: 0px;
+    color: var(--darkText);
+    font-weight: bold;
+    border-radius: 10px;
+    background: linear-gradient(var(--yellowPrimary), var(--coralPrimary));
+    text-decoration: none;
+    font-family: var(--fontFamily);
+
+    &:hover{
+        cursor: pointer;
+    }
+}
+.tooltip{
+    font-size: 16px;
+    color: var(--lightText);
+    text-align: center;
+}
+#username, #password{
+    background-color: var(--inputBackground);
+    color: var(--lightText);
+    outline: none;
+    height: 60px;
+    border: none;
+    border-radius: 10px;
+    padding-left: 20px;
+}
+#input-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

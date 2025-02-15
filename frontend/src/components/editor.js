@@ -90,6 +90,27 @@ function Editor() {
         editorInputElement.current.selectionStart = newCursorPos;
         editorInputElement.current.selectionEnd = newCursorPos;
     };
+
+    const selectLine = () => {
+        const textarea = editorInputElement.current;
+        const startPos = textarea.selectionStart;
+        const endPos = textarea.selectionEnd;
+    
+        // Find the start of the line
+        let lineStart = startPos;
+        while (lineStart > 0 && textarea.value[lineStart - 1] !== '\n') {
+            lineStart--;
+        }
+    
+        // Find the end of the line
+        let lineEnd = endPos;
+        while (lineEnd < textarea.value.length && textarea.value[lineEnd] !== '\n') {
+            lineEnd++;
+        }
+    
+        // Set the selection range
+        textarea.setSelectionRange(lineStart, lineEnd);
+    };
     
     const handleKeyDown = (e) => {
         if(e.key === 'Tab'){
@@ -97,6 +118,7 @@ function Editor() {
             insertAtCursor('\t');
         }
         if(e.ctrlKey && e.key === 'l'){
+            selectLine();
             e.preventDefault();
         }
     }

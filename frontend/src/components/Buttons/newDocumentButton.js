@@ -3,7 +3,7 @@ import '../../styles/buttons.scss'
 
 const NewDocumentButton = () => {
     return (
-        <Link class='new-document-btn' to='/'><p>+ New Document</p></Link>
+        <Link class='new-document-btn' to='/LumaApp'><p>+ New Document</p></Link>
     )
 }
 

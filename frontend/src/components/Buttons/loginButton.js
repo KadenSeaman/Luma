@@ -3,7 +3,7 @@ import '../../styles/buttons.scss'
 
 const LoginButton = () => {
     return (
-        <Link class='login-btn' to='/Home'><p>Log In</p></Link>
+        <Link class='login-btn' to='/SignIn'><p>Sign In</p></Link>
     )
 }
 
