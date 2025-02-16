@@ -107,7 +107,7 @@ function RendererContent() {
 
         const assignPaths = (nodeIdToNode, nodeNameToId) => {
             for(const edge of rootNode.edges || []){
-                if(!nodeNameToId.has(edge.source) || !nodeNameToId.has(edge.target)) continue;
+                if(!nodeNameToId.has(edge.source) || !nodeNameToId.has(edge.target) || edge.source === edge.target) continue;
 
                 const sourceId = nodeNameToId.get(edge.source);
                 const targetId = nodeNameToId.get(edge.target);
@@ -385,7 +385,7 @@ function RendererContent() {
                 const sourceId = nodeNameToId.get(edge.source);
                 const targetId = nodeNameToId.get(edge.target);
 
-                if(sourceId === undefined || targetId === undefined) continue;
+                if(sourceId === undefined || targetId === undefined || sourceId === targetId) continue;
 
                 adjList.get(sourceId).add(targetId);
             }

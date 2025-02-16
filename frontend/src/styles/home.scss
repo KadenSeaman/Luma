@@ -43,11 +43,16 @@ li:visited{
 }
 #main-panel{
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 #main-panel-title{
-    margin-top: 100px;
-    margin-left: 200px;
+    position: absolute;
+    left: 350px;
+    top: 70px;
     font-size: 48px;
     text-align: left;
     font-weight: bold;
@@ -57,4 +62,12 @@ li:visited{
 #logo-title-container{
     display: flex;
     gap: 10px;
+}
+
+#diagram-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(100px, auto);
+    gap: 50px;
+    min-height: 50%;
 }

@@ -11,7 +11,7 @@ const SignIn = () => {
             <div id='login-page'>
                 <div id='sign-in'>
                     <h1 id='sign-in-title'>Sign In</h1>
-                    <form id='sign-in-form' action="/api/">
+                    <form id='sign-in-form' action='/Home'>
                         <div id='input-container'>
                             <input classname='sign-in-input' type="text" name="username" id="username" placeholder="Username:"/>
                             <input classname='sign-in-input' type="password" name="password" id="password" placeholder="Password:"/>

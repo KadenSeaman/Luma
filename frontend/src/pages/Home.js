@@ -1,11 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/home.scss'
 
 import Logo from '../components/logo';
-import NewDocumentButton from '../components/Buttons/newDocumentButton';
+import NewDiagramButton from '../components/Buttons/newDiagramButton';
+import HomeDiagram from '../components/homeDiagram';
 import { Link } from 'react-router-dom';
 
+
 const Home = () => {
+
+    const [documents, setDocuments] = useState();
+
+    useEffect(() => {
+        
+        const getUserDocuments = async () => {
+            const response = await fetch('/diagrams', {
+                METHOD: 'GET',
+                headers: { "Content-Type": "application/json"}
+            });
+
+            if(response.ok){
+                const data = await response.json();
+                console.log(data);
+                setDocuments(data);
+            }
+        }
+
+        getUserDocuments();
+    }, [])
+
     return(
         <div id='homeContainer'>
             <div id='left-panel'>
@@ -17,7 +40,7 @@ const Home = () => {
                         </div>  
                     </li>
                     <li>
-                        <NewDocumentButton />
+                        <NewDiagramButton />
                     </li>
                     <li>
                         <Link className='left-panel-list-item'>Home</Link>
@@ -31,7 +54,12 @@ const Home = () => {
                 </ul>
             </div>
             <div id="main-panel">
-                <h1 id='main-panel-title'>Recent Documents</h1>
+                <h1 id='main-panel-title'>Recent Diagrams</h1>
+                <div id='diagram-container'>
+                    {documents !== undefined && documents.map((doc, i) => {
+                        return <HomeDiagram key={i} title={doc.title} docId={doc.id}/>
+                    })}
+                </div>
             </div>
         </div>
     )

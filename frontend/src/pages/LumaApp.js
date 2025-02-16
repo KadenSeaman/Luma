@@ -8,9 +8,11 @@ import Resizer from '../components/resizer';
 import Renderer from '../components/renderer';
 import Editor from '../components/editor';
 import NavBar from '../components/navBar';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import TopRibbon from '../components/topRibbon';
 import BottomRibbon from '../components/bottomRibbon';
+
+import { useParams } from 'react-router-dom';
 
 function LumaApp() {
   return (
@@ -23,6 +25,20 @@ function LumaApp() {
 }
 
 function AppContent() {
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchDocument = async () => {
+      const response = await fetch(`/api/documents/${id}`);
+      if(response.ok){
+        const data = await response.json();
+        console.log(data);
+      }
+    }
+
+    fetchDocument();
+  },[id])
+
   const DEFAULT_VALUES = {
     DEFAULT_EDITOR_WIDTH_PERCENTAGE: 49,
     DEFAULT_EDITOR_HEIGHT_PERCENTAGE: 100,

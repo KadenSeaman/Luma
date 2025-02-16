@@ -30,7 +30,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 10px 10px 10px var(--darkBackground);
 }
 #welcome-back{
     background: linear-gradient(var(--yellowPrimary), var(--coralPrimary));
@@ -43,8 +42,6 @@
     border-radius: 0px 25px 25px 0;
     box-sizing: border-box;
     padding: 25px;
-    box-shadow: 10px 10px 10px var(--darkBackground);
-
 }
 #sign-in-form{
     width: 80%;

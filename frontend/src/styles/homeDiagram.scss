@@ -1,0 +1,18 @@
+@import './variables.scss';
+
+.homeDiagram{
+    width: 200px;
+    height: 200px;
+    background-color: var(--mediumDarkBackground);
+    box-shadow: 10px 10px 10px var(--backgroundBlack);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+.diagramTitle{
+    color: var(--lightText);
+    text-decoration: none;
+    font-family: var(--fontFamily);
+}
