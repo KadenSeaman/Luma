@@ -26,18 +26,24 @@ function LumaApp() {
 
 function AppContent() {
   const { id } = useParams();
+  const [document, setDocuments] = useState();
 
-  useEffect(() => {
-    const fetchDocument = async () => {
-      const response = await fetch(`/api/documents/${id}`);
-      if(response.ok){
-        const data = await response.json();
-        console.log(data);
-      }
-    }
+    useEffect(() => {
+        const getUserDocuments = async () => {
+            const response = await fetch(`/diagrams/${id}`, {
+                METHOD: 'GET',
+                headers: { "Content-Type": "application/json"}
+            });
 
-    fetchDocument();
-  },[id])
+            if(response.ok){
+                const data = await response.json();
+                console.log(data);
+                setDocuments(data);
+            }
+        }
+
+        getUserDocuments();
+    }, [])
 
   const DEFAULT_VALUES = {
     DEFAULT_EDITOR_WIDTH_PERCENTAGE: 49,
@@ -108,11 +114,11 @@ function AppContent() {
   return (
     <div id='app' onResize={handleResize} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onMouseMove={handleMouseMove} style={appStyle}>
       <RendererProvider>
-        <NavBar logo={true} title={true} logoLink='/Home'></NavBar>
-        <TopRibbon></TopRibbon>
+        <NavBar logoTitle={document === undefined ? 'Luma' : document.title} logo={true} title={true} logoLink='/Home'></NavBar>
+        <TopRibbon ></TopRibbon>
         <div id='functional-app'>
 
-            <Editor  />
+            <Editor  loadedEditorContent={document}/>
             <Resizer />
             <Renderer />
 

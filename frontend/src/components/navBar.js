@@ -9,14 +9,15 @@ const NavBar = (props) => {
             signupButton = false, 
             logo = false, 
             title = false,
-            logoLink = ''
+            logoLink = '',
+            logoTitle = 'Luma'
     } = props;
 
     return (
         <nav id='navbar'>
             <div id='logo-title-container'>
                 {logo && <Logo  logoLink={logoLink}/>}
-                {title && <h1 id='title'>Luma</h1>}
+                {title && <h1 id='title'>{logoTitle}</h1>}
             </div>
 
             <div id='signup-login-container'>

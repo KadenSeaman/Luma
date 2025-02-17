@@ -21,7 +21,6 @@ const Home = () => {
 
             if(response.ok){
                 const data = await response.json();
-                console.log(data);
                 setDocuments(data);
             }
         }
@@ -57,7 +56,7 @@ const Home = () => {
                 <h1 id='main-panel-title'>Recent Diagrams</h1>
                 <div id='diagram-container'>
                     {documents !== undefined && documents.map((doc, i) => {
-                        return <HomeDiagram key={i} title={doc.title} docId={doc.id}/>
+                        return <HomeDiagram key={i} title={doc.title} docId={doc._id}/>
                     })}
                 </div>
             </div>

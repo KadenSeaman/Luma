@@ -5,8 +5,9 @@ import '../styles/editor.scss';
 
 import { preProcessJSONData } from "../helper/preProcessNodeJSON";
 
-function Editor() {
+function Editor({ loadedEditorContent }) {
     const { editorWidth, setRootNode } = useContext(AppContext);
+
 
     const editorInputElement = useRef(null);
     const lineNumbers = useRef(null);
@@ -16,6 +17,8 @@ function Editor() {
     const [hasError, setHasError] = useState(false);
     const [parseError, setParseError] = useState('');
     const [editorContent, setEditorContent] = useState('');  // eslint-disable-line no-unused-vars
+
+
 
     // Import Web Assembly script into browser
     useEffect(() => {
@@ -41,10 +44,23 @@ function Editor() {
             }
           };
           document.body.appendChild(wasmExecScript);
+
+          return () => {
+            if (editorInputElement.current !== undefined) parseTextToNodes();
+          }
         };
     
         loadWasm();
+
+
       }, []);
+
+      useEffect(() => {
+        if(loadedEditorContent !== undefined && editorInputElement.current !== undefined){
+            setEditorContent(loadedEditorContent.editorContent);
+            editorInputElement.current.value = loadedEditorContent.editorContent;
+        }
+    }, [loadedEditorContent])
 
     // Scroll Synchronization
     const synchronizeLineNumberScroll = () => {

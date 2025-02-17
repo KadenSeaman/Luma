@@ -25,10 +25,11 @@ router.post('/', async (req, res) => {
 // Retrieve a diagram
 router.get('/:id', async (req, res) => {
     try {
-        const document = await Document.findById(req.params.id);
+        const document = await Diagram.findById(req.params.id);
         if(!document) return res.status(404).json({ error: 'Document not found' });
         res.json(document);
     } catch (error){
+        console.log(error)
         res.status(500).json({ errorMessage: 'Error fetching document'})
     }
 })
@@ -41,6 +42,27 @@ router.get('/', async (req, res) => {
     }
     catch (error){
         res.status(500).json({ error: 'Failed to fetch documents'});
+    }
+})
+
+router.patch('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updateData = req.body;
+
+        const result = await Diagram.updateOne(
+            { _id : id} ,
+            { $set: updateData }
+        )
+
+        if(result.modifiedCount === 0){
+            return res.status(404).json({ message: 'No item found or no changes have been made'})
+        }
+
+        res.json({ message: 'Item updated sucessfully', result});
+
+    } catch (error){
+        res.status(500).json({ error: error.message });
     }
 })
 
